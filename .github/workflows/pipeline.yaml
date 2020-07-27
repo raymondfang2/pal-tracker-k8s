@@ -16,11 +16,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - run: curl -L https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-      - run: sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" > /etc/apt/sources.list.d/PostgreSQL.list'
-      - run: sudo apt update
-      - run: sudo apt-get install postgresql-11
-      - run: sleep 2m  
       - run: sudo -u postgres psql -f databases/tracker/create_databases.sql
       - run: curl https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/6.3.1/flyway-commandline-6.3.1-linux-x64.tar.gz | tar xvz -C ../
       - run: ../flyway-6.3.1/flyway -url="jdbc:postgresql://localhost:5432/tracker_test" -locations=filesystem:databases/tracker clean migrate -user=tracker -password='password'
