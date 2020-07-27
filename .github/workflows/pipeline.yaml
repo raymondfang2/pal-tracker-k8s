@@ -1,8 +1,6 @@
 name: Pal Tracker Pipeline
 
-on:
-  push:
-    branches: [*]
+on: [push]
 
 env:
   DOCKER_HUB_USERNAME: raymondfanglimin
