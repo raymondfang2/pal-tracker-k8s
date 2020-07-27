@@ -1,0 +1,130 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2020-07-27T01:40:18Z"
+  generateName: pal-tracker-development-765574545c-
+  labels:
+    app: pal-tracker
+    name: pal-tracker-pod
+    pod-template-hash: 765574545c
+  name: pal-tracker-development-765574545c-24zzm
+  namespace: development
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: pal-tracker-development-765574545c
+    uid: cd9081dd-e06d-4c88-a8ba-f4e983944a75
+  resourceVersion: "1344742"
+  selfLink: /api/v1/namespaces/development/pods/pal-tracker-development-765574545c-24zzm
+  uid: a90be0a6-2b4a-4a1c-b7f1-bacad48ef710
+spec:
+  containers:
+  - env:
+    - name: WELCOME_MESSAGE
+      valueFrom:
+        configMapKeyRef:
+          key: welcome.message
+          name: pal-tracker-development
+    - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+      valueFrom:
+        configMapKeyRef:
+          key: management.endpoints.web.exposure.include
+          name: pal-tracker-development
+    image: raymondfanglimin/pal-tracker:v3
+    imagePullPolicy: IfNotPresent
+    lifecycle:
+      preStop:
+        exec:
+          command:
+          - /bin/sleep
+          - "10"
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /actuator/health/liveness
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 150
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    name: pal-tracker-container
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /actuator/health/readiness
+        port: 8080
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-jllwg
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: gke-pal-for-devs-k8s-default-pool-c09b33a7-dkcj
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: default-token-jllwg
+    secret:
+      defaultMode: 420
+      secretName: default-token-jllwg
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2020-07-27T01:40:18Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2020-07-27T01:40:30Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2020-07-27T01:40:30Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2020-07-27T01:40:18Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://1ed8507620a295e3cff6d66ffc8072dc04415d822ab467adab080982bb9537e7
+    image: raymondfanglimin/pal-tracker:v3
+    imageID: docker-pullable://raymondfanglimin/pal-tracker@sha256:ec0fb736b4168534c618e95510cfdd0168e0151325fd68474889f6b7b976058c
+    lastState: {}
+    name: pal-tracker-container
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2020-07-27T01:40:19Z"
+  hostIP: 10.128.0.2
+  phase: Running
+  podIP: 10.40.2.13
+  podIPs:
+  - ip: 10.40.2.13
+  qosClass: BestEffort
+  startTime: "2020-07-27T01:40:18Z"
